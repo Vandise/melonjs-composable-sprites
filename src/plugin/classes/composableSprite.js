@@ -42,7 +42,7 @@ export default class ComposableSprite extends me.Entity
     this.renderable.composition.push(item.name);
   }
 
-  _update(time)
+  update(time)
   {
     const results = [];
 
@@ -56,9 +56,7 @@ export default class ComposableSprite extends me.Entity
       });
     }
 
-    return results.some((result) => {
-      return result;
-    });
+    return (this._super(me.Entity, 'update', [time]) || results.some((result) => { return result; }) );
   }
 
   draw(context)
