@@ -45,15 +45,15 @@ export default class Renderable extends me.Sprite
     }
   }
 
-  setCurrentAnimation(name)
+  setCurrentAnimation(name, cb = false)
   {
-    super.setCurrentAnimation(name);
+    super.setCurrentAnimation(name, cb);
     if (this.composition)
     {
       this.composition.forEach((n) => {
         if (n != this.name)
         {
-          this.children[n].renderable.setCurrentAnimation(name);
+          this.children[n].renderable.setCurrentAnimation(name, cb);
         }
       });
     }
