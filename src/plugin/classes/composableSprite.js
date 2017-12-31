@@ -42,6 +42,24 @@ export default class ComposableSprite extends me.Entity
     this.renderable.composition.push(item.name);
   }
 
+  removeCompositionItem(itemName)
+  {
+    const index = this.renderable.composition.indexOf(itemName);
+    if (index > -1)
+    {
+      this.renderable.composition.splice(index);
+      const obj = {};
+      this.renderable.composition.forEach((name) => {
+        obj[name] = this.renderable.children[name];
+      });
+      this.renderable.children = obj;
+    }
+    else
+    {
+      throw `Invalid name ${itemName} requested to be removed.`;
+    }
+  }
+
   update(time)
   {
     const results = [];
