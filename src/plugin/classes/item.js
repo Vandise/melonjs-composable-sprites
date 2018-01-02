@@ -9,7 +9,7 @@ class CompositionItem extends me.Entity
     this.owner = owner; // set position based on direction, etc
     this.item = item;
 
-    this.renderable.anchorPoint = this.owner.renderable.anchorPoint;
+    this.renderable.anchorPoint = this.item.anchorPoint || this.owner.renderable.anchorPoint;
 
     for (let i = 0; i < this.body.shapes.length; i++)
     {
