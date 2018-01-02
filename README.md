@@ -1,5 +1,7 @@
 # MelonJS Composable Sprite
-A plugin for MelonJS, allowing sprites to be composed of multiple sprite sheets without having to alter existing sprite configurations. 
+A plugin for MelonJS, allowing sprites to be composed of multiple sprite sheets without having to alter existing sprite configurations.
+
+You can see an example of this library being utilized in an RPG project [here](https://github.com/Vandise/game-elements). Specifically look at the [Main Player](https://github.com/Vandise/game-elements/tree/master/src/client/entities/mainplayer) directory for use-case and composition render priority.
 
 ## How to use this repository
 Upon release, all a version of this plugin will be saved in the `dist/` directory. There will be a minified version of the plugin for production use, and an expanded file, containing source-maps and debug information. Utilize whichever source file best suits your needs.
@@ -46,11 +48,75 @@ player.addCompositionItem({
 
 This will configure the object to all the settings specified in your `player` object.
 
-That's it! You're done. No additional changes to the update loop, animations, etc.
+Next you need to tell your update method to utilize the parent update method as well. This is only if you need to add some rendering effects (ie flipX or flipY).
+
+```
+update(time)
+{
+	return super.update(time) || (some other condition);
+	//this.parent.update(time)
+}
+```
+
+Otherwise you can rely strictly on the draw method provided with this plugin:
+
+```
+update(time)
+{
+	return (this._super(me.Entity, 'update', [time]);
+}
+```
+
+That's it! You're done. No additional changes to animations, anchors, scales, etc.
 
 ### Z-Index
 
-The order in which you compose your sprite will affect its appearance. Z-Index increases by one as you add a new item; so be weary about what will overlay what. A default z-index layout will be defined in the future.
+The order in which you compose your sprite will affect its appearance. Z-Index increases by one as you add a new item; so be weary about what will overlay what.
+
+Generally this isn't an issue, you can sort the renderable composition array `this.renderable.composition` to the order in which you want them to be displayed. 
+
+For example you can represent the items with various scores as a heap, then sort them if there was a change to the composition:
+
+```
+update(time)
+{
+	if (this.composition != this.renderable.composition)
+	{
+		this.renderable.composition = heapSort();
+	}
+}
+```
+
+### Configurations
+You can override some default behaviors by passing in the following information inside your object in `addCompositionItem`.
+
+#### animations (object)
+Example to override an animation inherited from the parent entity:
+
+```
+const item = {
+	// other item fields
+	animations: {
+		walk_up: {
+			frames: [1,2,3,4], // required
+			speed: 100         // required
+		}
+	}
+};
+```
+
+#### flipX, flipY
+Requires the use of the parent update loop.
+
+Flips the sprite for specific animations:
+
+```
+const item = {
+	// other item fields
+	flipX: ['walk_up', 'walk_down'],
+	flipY: ['walk_right']
+};
+```
 
 ## Contributing
 If there's a feature you would like to see in this plugin, send a pull or issue request on GitHub. Be sure to tag @Vandise in it.
