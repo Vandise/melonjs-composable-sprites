@@ -46,13 +46,29 @@ class CompositionItem extends me.Entity
     );
   }
 
+  flipRenderable()
+  {
+    if (this.item.flipX && this.item.flipX.includes(this.renderable.current.name) )
+    {
+      this.renderable.flipX(true);
+    }
+    else
+    {
+      this.renderable.flipX(false);
+    }
+    if (this.item.flipY && this.item.flipY.includes(this.renderable.current.name) )
+    {
+      this.renderable.flipY(true);
+    }
+    else
+    {
+      this.renderable.flipY(false);
+    }
+  }
+
   update(time)
   {
-    this.pos = this.owner.pos;
-    this._absPos = this.owner._absPos;
-
-    this.body.update(time);
-
+    this.flipRenderable();
     return (this._super(me.Entity, 'update', [time]) );
   }
 

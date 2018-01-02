@@ -3,7 +3,6 @@ export default class Renderable extends me.Sprite
 
   constructor(x, y, settings)
   {
-
     super(0, 0, settings);
 
     this.scaled = { x: 1, y: 1 };
@@ -13,7 +12,6 @@ export default class Renderable extends me.Sprite
     this.GUID = settings.GUID;
     this.isEntity = true;
     this.name = settings.name ? settings.name : this.GUID.toString();
-
   }
 
   scale(x, y)

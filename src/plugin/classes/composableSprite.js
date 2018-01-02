@@ -69,7 +69,7 @@ export default class ComposableSprite extends me.Entity
       this.renderable.composition.forEach((name) => {
         if (name != this.name)
         {
-          results.push(this.renderable.children[name].update(time));
+          this.renderable.children[name].update(time);
         }
       });
     }
@@ -81,7 +81,6 @@ export default class ComposableSprite extends me.Entity
   {
     if (!this.renderable.composition) {
       super.draw(context);
-      //this.renderable.draw(context);
       return;
     }
 
@@ -89,7 +88,6 @@ export default class ComposableSprite extends me.Entity
       if (name === this.name)
       {
         super.draw(context);
-        //this.renderable.draw(context);
       }
       else
       {
