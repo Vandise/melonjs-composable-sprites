@@ -1,12 +1,13 @@
 class CompositionItem extends me.Entity
 {
 
-  constructor(x, y, settings, owner)
+  constructor(x, y, settings, owner, item)
   {
     settings.GUID = me.utils.createGUID();
     super(x, y, settings);
     this.GUID = settings.GUID;
     this.owner = owner; // set position based on direction, etc
+    this.item = item;
 
     this.renderable.anchorPoint = this.owner.renderable.anchorPoint;
 
@@ -27,14 +28,22 @@ class CompositionItem extends me.Entity
     );
 
     this.renderable.anim = Object.assign({}, owner.renderable.anim);
-    this.renderable.animationspeed = this.owner.renderable.animationspeed;
-    this.renderable.setCurrentAnimation(
-      owner.renderable.current.name
-    );
 
     this.pos = this.owner.pos;
     this._absPos = this.owner._absPos;
     this.ancestor = this.owner;
+
+    if (this.item.animations)
+    {
+      Object.keys(this.item.animations).forEach((n) => {
+        this.renderable.addAnimation(n, this.item.animations[n].frames, this.item.animations[n].speed);
+      });
+    }
+
+    this.renderable.animationspeed = this.owner.renderable.animationspeed;
+    this.renderable.setCurrentAnimation(
+      owner.renderable.current.name
+    );
   }
 
   update(time)

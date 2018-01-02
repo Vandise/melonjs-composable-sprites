@@ -37,7 +37,7 @@ export default class ComposableSprite extends me.Entity
       image,
       width: item.width,
       height: item.height
-    }, this);
+    }, this, item);
 
     this.renderable.composition.push(item.name);
   }
@@ -47,7 +47,7 @@ export default class ComposableSprite extends me.Entity
     const index = this.renderable.composition.indexOf(itemName);
     if (index > -1)
     {
-      this.renderable.composition.splice(index);
+      this.renderable.composition.splice(index, 1);
       const obj = {};
       this.renderable.composition.forEach((name) => {
         obj[name] = this.renderable.children[name];
