@@ -27,7 +27,7 @@ class CompositionItem extends me.Entity
       owner.renderable.scaled.y
     );
 
-    this.renderable.anim = Object.assign({}, owner.renderable.anim);
+    this.renderable.anim = JSON.parse(JSON.stringify(owner.renderable.anim));
 
     this.pos = this.owner.pos;
     this._absPos = this.owner._absPos;
@@ -40,10 +40,10 @@ class CompositionItem extends me.Entity
       });
     }
 
-    this.renderable.animationspeed = this.owner.renderable.animationspeed;
     this.renderable.setCurrentAnimation(
       owner.renderable.current.name
     );
+
   }
 
   flipRenderable()
@@ -69,7 +69,9 @@ class CompositionItem extends me.Entity
   update(time)
   {
     this.flipRenderable();
-    return (this._super(me.Entity, 'update', [time]) );
+    //this.body.update(time);
+    //return (this._super(me.Entity, 'update', [time]) );
+    return (this._super(me.Entity, 'update', [time]));
   }
 
   onCollision(response, other) {

@@ -15,7 +15,20 @@ export default class ComposableSprite extends me.Entity
     this.renderable = new Renderable(x, y, settings);
 
     this.addCompositionItem(settings); // add the base sprite
+  }
 
+  setAnimationSpeed(speed)
+  {
+    this.renderable.composition.forEach((name) => {
+      if (name != this.name)
+      {
+        this.renderable.children[name].renderable.animationspeed = speed;
+      }
+      else
+      {
+        this.renderable.animationspeed = speed;
+      }
+    });
   }
 
   addCompositionItem(item)
@@ -50,7 +63,10 @@ export default class ComposableSprite extends me.Entity
       this.renderable.composition.splice(index, 1);
       const obj = {};
       this.renderable.composition.forEach((name) => {
-        obj[name] = this.renderable.children[name];
+        if (name != this.name)
+        {
+          obj[name] = this.renderable.children[name];
+        }
       });
       this.renderable.children = obj;
     }
@@ -74,7 +90,7 @@ export default class ComposableSprite extends me.Entity
       });
     }
 
-    return (this._super(me.Entity, 'update', [time]) || results.some((result) => { return result; }) );
+    return (this._super(me.Entity, 'update', [time]));
   }
 
   draw(context)
