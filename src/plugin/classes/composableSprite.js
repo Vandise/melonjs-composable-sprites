@@ -13,8 +13,15 @@ export default class ComposableSprite extends me.Entity
     this.name = settings.name ? settings.name : this.GUID.toString();
 
     this.renderable = new Renderable(x, y, settings);
+    this.state = this.state || {};
+    this.state['renderState'] = 'default';
 
     this.addCompositionItem(settings); // add the base sprite
+  }
+
+  setRenderState(stateName)
+  {
+    this.state.renderState = stateName;
   }
 
   setAnimationSpeed(speed)

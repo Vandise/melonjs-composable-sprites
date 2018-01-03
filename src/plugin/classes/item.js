@@ -70,8 +70,23 @@ class CompositionItem extends me.Entity
   {
     this.flipRenderable();
     //this.body.update(time);
-    //return (this._super(me.Entity, 'update', [time]) );
     return (this._super(me.Entity, 'update', [time]));
+  }
+
+  draw(context)
+  {
+    const states = this.item.renderStates;
+    if (states)
+    {
+      if (states.includes(this.owner.state.renderState))
+      {
+        super.draw(context);
+      }
+    }
+    else
+    {
+      super.draw(context);
+    }
   }
 
   onCollision(response, other) {

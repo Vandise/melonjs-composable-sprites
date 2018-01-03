@@ -118,6 +118,33 @@ const item = {
 };
 ```
 
+#### anchorPoint
+Specify a different anchorPoint for a sprite as opposed to the one inherited from the parent.
+
+```
+const anchorPoint = new me.Vector2d(0.5,0.6);
+const item = {
+	anchorPoint
+};
+```
+
+#### renderStates
+A state array of strings in which to render the item. Checks against the `renderState` value in the entity state object. Defaults to `default` and all states if `renderStates` is undefined.
+
+```
+// displays only if object.state.renderState is "sceneAnimating"
+const renderStates = ['sceneAnimating'];
+const item = {
+	renderStates
+};
+
+// will render for every state
+const item = {
+	name: 'test'
+};
+```
+
+
 ## Contributing
 If there's a feature you would like to see in this plugin, send a pull or issue request on GitHub. Be sure to tag @Vandise in it.
 
